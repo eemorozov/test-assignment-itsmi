@@ -2,3 +2,9 @@
 node_modules/
 dist/
 .env
+
+# Local AI Engineering System, Plans & Code Reviews (Tracked in their own local Git)
+AGENTS.md
+.agents/
+docs/
+code-review/

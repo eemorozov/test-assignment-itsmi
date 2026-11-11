@@ -5,6 +5,13 @@
 
 ---
 
+## Публичное демо (Cloud Deployment)
+
+* **Apollo Sandbox:** [https://test-assignment-itsmi-production.up.railway.app/graphql](https://test-assignment-itsmi-production.up.railway.app/graphql) (или корень [https://test-assignment-itsmi-production.up.railway.app](https://test-assignment-itsmi-production.up.railway.app) с автоматическим редиректом)
+* **Healthcheck:** [https://test-assignment-itsmi-production.up.railway.app/health](https://test-assignment-itsmi-production.up.railway.app/health)
+
+---
+
 ## Ключевые инженерные преимущества
 
 1. **3-слойная модульная архитектура (Separation of Concerns):**

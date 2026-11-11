@@ -41,13 +41,13 @@ RUN apk add --no-cache openssl
 # Create non-root system user for container security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Copy production artifacts from builder
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
-COPY docker-entrypoint.sh ./
-RUN sed -i 's/\r$//' ./docker-entrypoint.sh && chmod +x ./docker-entrypoint.sh
+# Copy production artifacts from builder with non-root ownership
+COPY --chown=appuser:appgroup --from=builder /app/node_modules ./node_modules
+COPY --chown=appuser:appgroup --from=builder /app/package*.json ./
+COPY --chown=appuser:appgroup --from=builder /app/dist ./dist
+COPY --chown=appuser:appgroup --from=builder /app/prisma ./prisma
+COPY --chown=appuser:appgroup docker-entrypoint.sh ./
+RUN sed -i 's/\r$//' ./docker-entrypoint.sh && chmod +x ./docker-entrypoint.sh && chown -R appuser:appgroup /app
 
 USER appuser
 

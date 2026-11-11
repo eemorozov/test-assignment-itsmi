@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.idea
+.env
+.env.*
+!.env.example
+.agents
+AGENTS.md
+docs
+code-review
+*.bat
+*.txt
+*.log

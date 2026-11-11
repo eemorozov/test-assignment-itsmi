@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id          String       @id @default(uuid())
+  slug        String       @unique @default("main")
+  name        String
+  title       String
+  location    String
+  description String
+  education   String?
+  languages   String[]
+  links       SocialLink[]
+  skills      Skill[]
+  experience  Experience[]
+  projects    Project[]
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  @@map("profiles")
+}
+
+model SocialLink {
+  id        String  @id @default(uuid())
+  platform  String
+  url       String
+  sortOrder Int     @default(0) @map("sort_order")
+  profileId String  @map("profile_id")
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, sortOrder])
+  @@map("social_links")
+}
+
+model Skill {
+  id        String  @id @default(uuid())
+  name      String
+  category  String?
+  sortOrder Int     @default(0) @map("sort_order")
+  profileId String  @map("profile_id")
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, sortOrder])
+  @@map("skills")
+}
+
+model Experience {
+  id           String    @id @default(uuid())
+  company      String
+  companyInfo  String?   @map("company_info")
+  position     String
+  period       String
+  startDate    DateTime  @map("start_date")
+  endDate      DateTime? @map("end_date")
+  achievements String[]
+  techStack    String[]  @map("tech_stack")
+  sortOrder    Int       @default(0) @map("sort_order")
+  profileId    String    @map("profile_id")
+  profile      Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, sortOrder])
+  @@map("experiences")
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  url         String
+  techStack   String[] @map("tech_stack")
+  sortOrder   Int      @default(0) @map("sort_order")
+  profileId   String   @map("profile_id")
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId, sortOrder])
+  @@map("projects")
+}
